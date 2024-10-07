@@ -1,17 +1,38 @@
+import React from 'react';
+import { Layout, theme } from 'antd';
+import Sidebar from '@/components/layout/Sidebar';
+import Topbar from '@/components/layout/Topbar';
 
+const { Content } = Layout;
 
-function App() {
+const App: React.FC = () => {
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
 
   return (
-    <>
-      <div>
+    <Layout style={{ minHeight: '100vh' }}>
+      {/* sidebar */}
+      <Sidebar />
+      <Layout>
+        {/* header */}
+        <Topbar />
+        {/* content */}
+        <Content style={{ margin: '1rem' }}>
+          <div
+            style={{
+              padding: 24,
+              minHeight: 590,
+              background: colorBgContainer,
+              borderRadius: borderRadiusLG,
+            }}
+          >
+            Bill is a cat.
+          </div>
+        </Content>
+      </Layout>
+    </Layout>
+  );
+};
 
-        <h1>Vite + React</h1>
-
-      </div>
-
-    </>
-  )
-}
-
-export default App
+export default App;
