@@ -2,6 +2,7 @@ import React from 'react';
 import { Layout, theme } from 'antd';
 import Sidebar from '@/components/layout/Sidebar';
 import Topbar from '@/components/layout/Topbar';
+import { Outlet } from 'react-router-dom';
 
 const { Content } = Layout;
 
@@ -21,13 +22,13 @@ const App: React.FC = () => {
         <Content style={{ margin: '1rem' }}>
           <div
             style={{
-              padding: 24,
-              minHeight: 590,
+              padding: "1.5rem",
+              minHeight: "100%",
               background: colorBgContainer,
               borderRadius: borderRadiusLG,
             }}
           >
-            Bill is a cat.
+            <Outlet />
           </div>
         </Content>
       </Layout>
