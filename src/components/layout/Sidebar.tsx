@@ -1,13 +1,14 @@
 import { Layout, Menu } from 'antd';
 import type { MenuProps } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     DesktopOutlined,
     UnorderedListOutlined,
-    PieChartOutlined,
+    RiseOutlined,
     TeamOutlined,
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+
 type MenuItem = Required<MenuProps>['items'][number];
 
 const { Sider } = Layout;
@@ -27,7 +28,6 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-    getItem('Option 1', '1', <PieChartOutlined />),
     getItem('Option 2', '2', <DesktopOutlined />),
     getItem('Users', '/users', <TeamOutlined />),
     // getItem('Team', 'sub2', <TeamOutlined />, [
@@ -35,17 +35,29 @@ const items: MenuItem[] = [
     //     getItem('Team 2', '8')
     // ]),
     getItem('Categories', '/categories', <UnorderedListOutlined />),
+    getItem('Levels', '/levels', <RiseOutlined />),
 ];
 
 const Sidebar = () => {
     const navigate = useNavigate();
     const [collapsed, setCollapsed] = useState<boolean>(false);
+    const [selectedKey, setSelectedKey] = useState<string>(location.pathname);
+
+    // update selectedKey when URL change
+    useEffect(() => {
+        setSelectedKey(location.pathname);
+    }, [location.pathname]);
+
+    const handleMenuClick = (e: { key: string }) => {
+        navigate(e.key);
+    };
+
     return (
         <Sider theme='light' collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
             <Menu
-                onClick={(e) => navigate(e.key)}
+                onClick={handleMenuClick}
                 theme="light"
-                defaultSelectedKeys={['1']}
+                selectedKeys={[selectedKey]}
                 mode="inline"
                 items={items}
             />

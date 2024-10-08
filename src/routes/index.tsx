@@ -2,6 +2,7 @@ import App from "@/App";
 import Categories from "@/pages/Categories";
 import Courses from "@/pages/Courses";
 import ErrorPage from "@/pages/ErrorPage";
+import Levels from "@/pages/Levels";
 import Login from "@/pages/Login";
 import Users from "@/pages/Users";
 import { createBrowserRouter } from "react-router-dom";
@@ -23,6 +24,10 @@ export const router = createBrowserRouter([
       {
         path: 'courses',
         element: <Courses />
+      },
+      {
+        path: 'levels',
+        element: <Levels />
       }
     ]
   },
