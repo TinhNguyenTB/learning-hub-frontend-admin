@@ -6,7 +6,6 @@ import {
     UnorderedListOutlined,
     PieChartOutlined,
     TeamOutlined,
-    UserOutlined,
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 type MenuItem = Required<MenuProps>['items'][number];
@@ -30,11 +29,11 @@ function getItem(
 const items: MenuItem[] = [
     getItem('Option 1', '1', <PieChartOutlined />),
     getItem('Option 2', '2', <DesktopOutlined />),
-    getItem('Users', '/users', <UserOutlined />),
-    getItem('Team', 'sub2', <TeamOutlined />, [
-        getItem('Team 1', '6'),
-        getItem('Team 2', '8')
-    ]),
+    getItem('Users', '/users', <TeamOutlined />),
+    // getItem('Team', 'sub2', <TeamOutlined />, [
+    //     getItem('Team 1', '6'),
+    //     getItem('Team 2', '8')
+    // ]),
     getItem('Categories', '/categories', <UnorderedListOutlined />),
 ];
 
