@@ -1,8 +1,8 @@
-import { getAllLevels } from '@/apis/levels/getAll';
-import { useQuery } from '@tanstack/react-query';
-import { Space, Table } from 'antd';
+import { Button, Space, Table } from 'antd';
 import type { TableProps } from 'antd';
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { useEffect, useState } from 'react';
+// import AddLevelModal from '@/components/level/AddLevelModal';
 
 interface DataType {
     id: string;
@@ -28,11 +28,11 @@ const columns: TableProps<DataType>['columns'] = [
         render: (_, record) => (
             <Space size="large">
                 <EditOutlined
-                    style={{ fontSize: '1.5rem', cursor: 'pointer' }}
+                    style={{ fontSize: '1.5rem', cursor: 'pointer', color: 'brown' }}
 
                 />
                 <DeleteOutlined
-                    style={{ fontSize: '1.5rem', cursor: 'pointer' }}
+                    style={{ fontSize: '1.5rem', cursor: 'pointer', color: 'red' }}
 
                 />
             </Space>
@@ -43,14 +43,34 @@ const columns: TableProps<DataType>['columns'] = [
 
 
 const Levels = () => {
-    const { data, isLoading } = useQuery({
-        queryKey: ['levels'],
-        queryFn: () => getAllLevels()
-    })
+    const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
+    const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [data, setData] = useState<DataType[] | undefined>(undefined);
 
-    const levels: DataType[] = data?.data;
+    // const fetchData = async () => {
+    //     const res = await getAllLevels();
+    //     if (res.data) {
+    //         setData(res.data.data)
+    //         setIsLoading(false)
+    //     }
+    //     else if(res?.)
+    // }
+
+    // useEffect(() => {
+    //     fetchData()
+    // }, [])
+
+    const levels: DataType[] | undefined = data;
     return (
         <div>
+            <Button
+                type='primary'
+                style={{ margin: '0 0 1rem' }}
+                onClick={() => setIsAddModalOpen(true)}
+            >
+                Add level
+            </Button>
             <Table<DataType>
                 loading={isLoading}
                 rowKey={"id"}
@@ -58,6 +78,10 @@ const Levels = () => {
                 dataSource={levels}
                 columns={columns}
             />
+            {/* <AddLevelModal
+                    isOpen={isAddModalOpen}
+                    setOpen={setIsAddModalOpen}
+                /> */}
         </div>
     )
 }
