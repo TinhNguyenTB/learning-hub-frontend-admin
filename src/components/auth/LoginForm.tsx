@@ -5,7 +5,7 @@ const LoginForm = () => {
     const onFinish = (values: any) => {
         console.log('Received values of form: ', values);
     };
-
+    console.log(import.meta.env.VITE_BASE_BACKEND_URL)
     return (
         <div style={{
             height: '100vh',
