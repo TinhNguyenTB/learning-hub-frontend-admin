@@ -66,6 +66,11 @@ export interface ILevel {
     name: string
 }
 
+export interface IStatus {
+    id: string
+    name: string
+}
+
 export interface IResource {
     id: string
     name: string
