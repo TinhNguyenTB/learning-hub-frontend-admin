@@ -49,6 +49,9 @@ export interface ICourse {
     imageUrl: string
     price: number
     isPublished: boolean
+    instructor: {
+        name: string
+    }
     instructorId: string
     category: ICategory
     categoryId: string

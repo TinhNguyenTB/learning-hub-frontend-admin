@@ -23,3 +23,13 @@ export const changeStatus = async (statusName: string, id: string) => {
         }
     })
 }
+
+export const deleteCourseById = async (courseId: string) => {
+    return await sendRequest<IBackendRes<IModelPaginate<ICourse>>>({
+        url: `${import.meta.env.VITE_BASE_BACKEND_URL}/api/v1/courses`,
+        method: 'DELETE',
+        body: {
+            courseId
+        }
+    })
+}

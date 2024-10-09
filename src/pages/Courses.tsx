@@ -3,7 +3,7 @@ import type { TableProps } from 'antd';
 import { DeleteOutlined } from "@ant-design/icons";
 import { useEffect, useState } from 'react';
 import { ICourse, IStatus } from '@/types/backend';
-import { changeStatus, getAllCourses } from '@/apis/courses.api';
+import { changeStatus, deleteCourseById, getAllCourses } from '@/apis/courses.api';
 import type { GetProps } from 'antd';
 import { formatCurrency } from '@/utils/formatCurrency';
 import { getAllStatus } from '@/apis/status.api';
@@ -63,7 +63,9 @@ const Courses = () => {
             key: 'no',
             width: '1rem',
             render: (_, record, index) => (
-                <p style={{ textAlign: 'center' }}>{(current - 1) * pageSize + index + 1}</p>
+                <p style={{ textAlign: 'center' }}>
+                    {(current - 1) * pageSize + index + 1}
+                </p>
             )
         },
         {
@@ -84,6 +86,11 @@ const Courses = () => {
             key: 'category',
         },
         {
+            title: 'Instructor',
+            dataIndex: ['instructor', 'name'],
+            key: 'instructor',
+        },
+        {
             title: 'Status',
             key: 'statusName',
             render: (_, record) => (
@@ -102,8 +109,8 @@ const Courses = () => {
                 <Popconfirm
                     placement="leftTop"
                     title={"Delete level"}
-                    description={"Are you sure to delete this level?"}
-                // onConfirm={() => handleDeleteLevel(record.id)}
+                    description={"Are you sure to delete this course?"}
+                    onConfirm={() => handleDeleteCourse(record.id)}
                 >
                     <DeleteOutlined
                         style={{ fontSize: '1.5rem', cursor: 'pointer', color: 'red' }}
@@ -128,6 +135,17 @@ const Courses = () => {
             message.error(res.message)
         }
     };
+
+    const handleDeleteCourse = async (id: string) => {
+        const res = await deleteCourseById(id);
+        if (res.data) {
+            message.success("Delete course succeed")
+            fetchData(current, pageSize, search);
+        }
+        else if (res.error) {
+            message.error(res.message)
+        }
+    }
 
     return (
         <div style={{ display: "flex", flexDirection: 'column', gap: "1rem" }}>
