@@ -2,7 +2,6 @@ import { Button, message, Popconfirm, Space, Table } from 'antd';
 import type { TableProps } from 'antd';
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useEffect, useState } from 'react';
-// import AddLevelModal from '@/components/level/AddLevelModal';
 import { deleteLevelById, getAllLevels } from '@/apis/levels.api';
 import AddLevelModal from '@/components/level/AddLevelModal';
 import EditLevelModal from '@/components/level/EditLevelModal';
@@ -51,7 +50,7 @@ const Levels = () => {
         {
             title: 'NO',
             key: 'no',
-            width: '20px',
+            width: '1rem',
             render: (text, object, index) => <p style={{ textAlign: 'center' }}>{index + 1}</p>
         },
         {
@@ -73,8 +72,7 @@ const Levels = () => {
                                 name: record.name
                             })
                             setIsEditModalOpen(true)
-                        }
-                        }
+                        }}
                     />
                     <Popconfirm
                         placement="leftTop"

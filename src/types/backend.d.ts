@@ -50,6 +50,7 @@ export interface ICourse {
     price: number
     isPublished: boolean
     instructorId: string
+    category: ICategory
     categoryId: string
     subCategoryId: string
     levelId: string

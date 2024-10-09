@@ -2,7 +2,7 @@ import { Layout, Menu } from 'antd';
 import type { MenuProps } from 'antd';
 import { useEffect, useState } from 'react';
 import {
-    DesktopOutlined,
+    PlayCircleOutlined,
     UnorderedListOutlined,
     RiseOutlined,
     TeamOutlined,
@@ -28,7 +28,7 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-    getItem('Option 2', '/', <DesktopOutlined />),
+    getItem('Courses', '/courses', <PlayCircleOutlined />),
     getItem('Users', '/users', <TeamOutlined />),
     // getItem('Team', 'sub2', <TeamOutlined />, [
     //     getItem('Team 1', '6'),
