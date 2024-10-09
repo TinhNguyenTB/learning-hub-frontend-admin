@@ -1,8 +1,10 @@
-import { Button, Space, Table } from 'antd';
+import { Button, message, Space, Table } from 'antd';
 import type { TableProps } from 'antd';
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useEffect, useState } from 'react';
 // import AddLevelModal from '@/components/level/AddLevelModal';
+import { getAllLevels } from '@/apis/levels.api';
+import AddLevelModal from '@/components/level/AddLevelModal';
 
 interface DataType {
     id: string;
@@ -48,20 +50,23 @@ const Levels = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [data, setData] = useState<DataType[] | undefined>(undefined);
 
-    // const fetchData = async () => {
-    //     const res = await getAllLevels();
-    //     if (res.data) {
-    //         setData(res.data.data)
-    //         setIsLoading(false)
-    //     }
-    //     else if(res?.)
-    // }
+    const fetchData = async () => {
+        const res = await getAllLevels();
+        if (res.data) {
+            setData(res.data)
+            setIsLoading(false)
+        }
+        else if (res?.error) {
+            message.error(res.message)
+        }
+    }
 
-    // useEffect(() => {
-    //     fetchData()
-    // }, [])
+    useEffect(() => {
+        fetchData()
+    }, [])
 
     const levels: DataType[] | undefined = data;
+
     return (
         <div>
             <Button
@@ -78,10 +83,11 @@ const Levels = () => {
                 dataSource={levels}
                 columns={columns}
             />
-            {/* <AddLevelModal
-                    isOpen={isAddModalOpen}
-                    setOpen={setIsAddModalOpen}
-                /> */}
+            <AddLevelModal
+                isOpen={isAddModalOpen}
+                setOpen={setIsAddModalOpen}
+                getData={fetchData}
+            />
         </div>
     )
 }
