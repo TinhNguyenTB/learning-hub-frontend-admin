@@ -1,48 +1,15 @@
-import { Button, message, Space, Table } from 'antd';
+import { Button, message, Popconfirm, Space, Table } from 'antd';
 import type { TableProps } from 'antd';
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useEffect, useState } from 'react';
 // import AddLevelModal from '@/components/level/AddLevelModal';
-import { getAllLevels } from '@/apis/levels.api';
+import { deleteLevelById, getAllLevels } from '@/apis/levels.api';
 import AddLevelModal from '@/components/level/AddLevelModal';
 
 interface DataType {
     id: string;
     name: string;
 }
-
-const columns: TableProps<DataType>['columns'] = [
-    {
-        title: 'NO',
-        key: 'no',
-        width: '20px',
-        render: (text, object, index) => <p style={{ textAlign: 'center' }}>{index + 1}</p>
-    },
-    {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        render: (_, record) => <p>{record.name}</p>,
-    },
-    {
-        title: 'Actions',
-        key: 'actions',
-        render: (_, record) => (
-            <Space size="large">
-                <EditOutlined
-                    style={{ fontSize: '1.5rem', cursor: 'pointer', color: 'brown' }}
-
-                />
-                <DeleteOutlined
-                    style={{ fontSize: '1.5rem', cursor: 'pointer', color: 'red' }}
-
-                />
-            </Space>
-        ),
-    },
-];
-
-
 
 const Levels = () => {
     const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
@@ -66,6 +33,54 @@ const Levels = () => {
     }, [])
 
     const levels: DataType[] | undefined = data;
+
+    const handleDeleteLevel = async (id: string) => {
+        const res = await deleteLevelById(id);
+        if (res.data) {
+            message.success("Delete level succeed");
+            fetchData()
+        }
+        else if (res.error) {
+            message.error(res.message)
+        }
+    }
+
+    const columns: TableProps<DataType>['columns'] = [
+        {
+            title: 'NO',
+            key: 'no',
+            width: '20px',
+            render: (text, object, index) => <p style={{ textAlign: 'center' }}>{index + 1}</p>
+        },
+        {
+            title: 'Name',
+            dataIndex: 'name',
+            key: 'name',
+            render: (_, record) => <p>{record.name}</p>,
+        },
+        {
+            title: 'Actions',
+            key: 'actions',
+            render: (_, record) => (
+                <Space size="large">
+                    <EditOutlined
+                        style={{ fontSize: '1.5rem', cursor: 'pointer', color: 'brown' }}
+
+                    />
+                    <Popconfirm
+                        placement="leftTop"
+                        title={"Delete level"}
+                        description={"Are you sure to delete this level?"}
+                        onConfirm={() => handleDeleteLevel(record.id)}
+                    >
+                        <DeleteOutlined
+                            style={{ fontSize: '1.5rem', cursor: 'pointer', color: 'red' }}
+                        />
+                    </Popconfirm>
+                </Space>
+            ),
+        },
+    ];
 
     return (
         <div>

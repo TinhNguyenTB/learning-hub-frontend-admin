@@ -4,8 +4,7 @@ import { sendRequest } from "@/apis/http";
 export const getAllLevels = async () => {
     return await sendRequest<IBackendRes<ILevel[]>>({
         url: `${import.meta.env.VITE_BASE_BACKEND_URL}/api/v1/levels`,
-        method: 'GET',
-
+        method: 'GET'
     })
 }
 
@@ -14,5 +13,12 @@ export const createLevel = async (data: { name: string }) => {
         url: `${import.meta.env.VITE_BASE_BACKEND_URL}/api/v1/levels`,
         method: 'POST',
         body: data
+    })
+}
+
+export const deleteLevelById = async (id: string) => {
+    return await sendRequest<IBackendRes<ILevel>>({
+        url: `${import.meta.env.VITE_BASE_BACKEND_URL}/api/v1/levels/${id}`,
+        method: 'DELETE'
     })
 }
