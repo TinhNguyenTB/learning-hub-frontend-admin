@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 // import AddLevelModal from '@/components/level/AddLevelModal';
 import { deleteLevelById, getAllLevels } from '@/apis/levels.api';
 import AddLevelModal from '@/components/level/AddLevelModal';
+import EditLevelModal from '@/components/level/EditLevelModal';
 
 interface DataType {
     id: string;
@@ -16,6 +17,7 @@ const Levels = () => {
     const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [data, setData] = useState<DataType[] | undefined>(undefined);
+    const [dataUpdate, setDataUpdate] = useState<DataType>({ id: "", name: "" });
 
     const fetchData = async () => {
         const res = await getAllLevels();
@@ -65,7 +67,14 @@ const Levels = () => {
                 <Space size="large">
                     <EditOutlined
                         style={{ fontSize: '1.5rem', cursor: 'pointer', color: 'brown' }}
-
+                        onClick={() => {
+                            setDataUpdate({
+                                id: record.id,
+                                name: record.name
+                            })
+                            setIsEditModalOpen(true)
+                        }
+                        }
                     />
                     <Popconfirm
                         placement="leftTop"
@@ -101,6 +110,12 @@ const Levels = () => {
             <AddLevelModal
                 isOpen={isAddModalOpen}
                 setOpen={setIsAddModalOpen}
+                getData={fetchData}
+            />
+            <EditLevelModal
+                isOpen={isEditModalOpen}
+                setOpen={setIsEditModalOpen}
+                dataUpdate={dataUpdate}
                 getData={fetchData}
             />
         </div>

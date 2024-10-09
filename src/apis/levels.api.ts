@@ -22,3 +22,13 @@ export const deleteLevelById = async (id: string) => {
         method: 'DELETE'
     })
 }
+
+export const updateLevel = async (id: string, name: string) => {
+    return await sendRequest<IBackendRes<ILevel>>({
+        url: `${import.meta.env.VITE_BASE_BACKEND_URL}/api/v1/levels/${id}`,
+        method: 'PATCH',
+        body: {
+            name
+        }
+    })
+}
