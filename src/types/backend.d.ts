@@ -32,7 +32,7 @@ export interface ILevel {
 export interface ICategory {
     id: string
     name: string
-    subCategories: ISubcategory[]
+    subCategories?: ISubcategory[]
 }
 
 export interface ISubcategory {
@@ -50,7 +50,8 @@ export interface ICourse {
     price: number
     isPublished: boolean
     instructor: {
-        name: string
+        name: string,
+        id: string
     }
     instructorId: string
     category: ICategory

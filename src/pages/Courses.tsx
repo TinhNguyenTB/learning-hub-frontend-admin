@@ -105,6 +105,7 @@ const Courses = () => {
         {
             title: 'Actions',
             key: 'actions',
+            width: '1.5rem',
             render: (_, record) => (
                 <Popconfirm
                     placement="leftTop"
