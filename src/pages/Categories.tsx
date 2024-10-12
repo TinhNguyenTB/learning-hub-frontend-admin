@@ -2,7 +2,7 @@ import { Button, message, Popconfirm, Space, Table } from 'antd';
 import type { TableProps } from 'antd';
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useEffect, useState } from 'react';
-import { getAllCategories } from '@/apis/categories.api';
+import { deleteCategoryById, getAllCategories } from '@/apis/categories.api';
 import { ICategory } from '@/types/backend';
 import AddCategoryModal from '@/components/category/AddCategoryModal';
 import EditCategoryModal from '@/components/category/EditCategoryModal';
@@ -28,6 +28,17 @@ const Categories = () => {
     useEffect(() => {
         fetchData()
     }, [])
+
+    const handleDeleteCategory = async (id: string) => {
+        const res = await deleteCategoryById(id);
+        if (res.data) {
+            message.success("Delete category succeed");
+            fetchData()
+        }
+        else if (res.error) {
+            message.error(res.message)
+        }
+    }
 
     const columns: TableProps<ICategory>['columns'] = [
         {
@@ -60,8 +71,8 @@ const Categories = () => {
                     <Popconfirm
                         placement="leftTop"
                         title={"Delete level"}
-                        description={"Are you sure to delete this level?"}
-                    // onConfirm={() => handleDeleteLevel(record.id)}
+                        description={"Are you sure to delete this category?"}
+                        onConfirm={() => handleDeleteCategory(record.id)}
                     >
                         <DeleteOutlined
                             style={{ fontSize: '1.5rem', cursor: 'pointer', color: 'red' }}
