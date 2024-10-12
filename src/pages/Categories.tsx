@@ -45,7 +45,7 @@ const Categories = () => {
             title: 'NO',
             key: 'no',
             width: '1rem',
-            render: (text, object, index) => <p style={{ textAlign: 'center' }}>{index + 1}</p>
+            render: (_, record, index) => <p style={{ textAlign: 'center' }}>{index + 1}</p>
         },
         {
             title: 'Name',

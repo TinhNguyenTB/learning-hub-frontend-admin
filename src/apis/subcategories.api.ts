@@ -1,10 +1,15 @@
-import { IBackendRes, ISubcategory } from "@/types/backend";
+import { IBackendRes, IModelPaginate, ISubcategory } from "@/types/backend";
 import { sendRequest } from "@/apis/http";
 
-export const getAllSubcategories = async () => {
-    return await sendRequest<IBackendRes<ISubcategory[]>>({
+export const getAllSubcategories = async (current: number, pageSize: number, search?: string) => {
+    return await sendRequest<IBackendRes<IModelPaginate<ISubcategory>>>({
         url: `${import.meta.env.VITE_BASE_BACKEND_URL}/api/v1/subcategories`,
-        method: 'GET'
+        method: 'GET',
+        queryParams: {
+            current,
+            pageSize,
+            search
+        }
     })
 }
 
