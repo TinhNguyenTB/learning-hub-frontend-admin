@@ -39,6 +39,10 @@ export interface ISubcategory {
     id: string
     name: string
     categoryId: string
+    category: {
+        id: string
+        name: string
+    }
 }
 
 export interface ICourse {

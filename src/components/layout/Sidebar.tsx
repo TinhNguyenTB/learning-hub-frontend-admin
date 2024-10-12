@@ -6,6 +6,7 @@ import {
     UnorderedListOutlined,
     RiseOutlined,
     TeamOutlined,
+    OrderedListOutlined
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
@@ -31,10 +32,11 @@ const items: MenuItem[] = [
     getItem('Courses', '/courses', <PlayCircleOutlined />),
     getItem('Users', '/users', <TeamOutlined />),
     // getItem('Team', 'sub2', <TeamOutlined />, [
-    //     getItem('Team 1', '6'),
+    //     getItem('Team 1', '6'), 
     //     getItem('Team 2', '8')
     // ]),
     getItem('Categories', '/categories', <UnorderedListOutlined />),
+    getItem('Subcategories', '/subcategories', <OrderedListOutlined />),
     getItem('Levels', '/levels', <RiseOutlined />),
 ];
 
