@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { getAllCategories } from '@/apis/categories.api';
 import { ICategory } from '@/types/backend';
 import AddCategoryModal from '@/components/category/AddCategoryModal';
+import EditCategoryModal from '@/components/category/EditCategoryModal';
 
 const Categories = () => {
     const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
@@ -92,13 +93,13 @@ const Categories = () => {
                 setOpen={setIsAddModalOpen}
                 getData={fetchData}
             />
-            {/*
-        <EditLevelModal
-            isOpen={isEditModalOpen}
-            setOpen={setIsEditModalOpen}
-            dataUpdate={dataUpdate}
-            getData={fetchData}
-        /> */}
+
+            <EditCategoryModal
+                isOpen={isEditModalOpen}
+                setOpen={setIsEditModalOpen}
+                dataUpdate={dataUpdate}
+                getData={fetchData}
+            />
         </div>
     )
 }
