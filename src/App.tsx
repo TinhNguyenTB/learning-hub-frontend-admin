@@ -3,6 +3,7 @@ import { Layout, theme } from 'antd';
 import Sidebar from '@/components/layout/Sidebar';
 import Topbar from '@/components/layout/Topbar';
 import { Outlet } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthProvider';
 
 const { Content } = Layout;
 
@@ -12,27 +13,29 @@ const App: React.FC = () => {
   } = theme.useToken();
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      {/* sidebar */}
-      <Sidebar />
-      <Layout>
-        {/* header */}
-        <Topbar />
-        {/* content */}
-        <Content style={{ margin: '1rem' }}>
-          <div
-            style={{
-              padding: "1.5rem",
-              minHeight: "100%",
-              background: colorBgContainer,
-              borderRadius: borderRadiusLG,
-            }}
-          >
-            <Outlet />
-          </div>
-        </Content>
+    <AuthProvider>
+      <Layout style={{ minHeight: '100vh' }}>
+        {/* sidebar */}
+        <Sidebar />
+        <Layout>
+          {/* header */}
+          <Topbar />
+          {/* content */}
+          <Content style={{ margin: '1rem' }}>
+            <div
+              style={{
+                padding: "1.5rem",
+                minHeight: "100%",
+                background: colorBgContainer,
+                borderRadius: borderRadiusLG,
+              }}
+            >
+              <Outlet />
+            </div>
+          </Content>
+        </Layout>
       </Layout>
-    </Layout>
+    </AuthProvider>
   );
 };
 

@@ -13,7 +13,7 @@ export const getAllSubcategories = async (current: number, pageSize: number, sea
     })
 }
 
-export const createSubcategory = async (data: { name: string }) => {
+export const createSubcategory = async (data: { name: string; categoryId: string }) => {
     return await sendRequest<IBackendRes<ISubcategory>>({
         url: `${import.meta.env.VITE_BASE_BACKEND_URL}/api/v1/subcategories`,
         method: 'POST',

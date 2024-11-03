@@ -1,9 +1,23 @@
+import { login } from '@/apis/auth';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Typography } from 'antd';
+import { Button, Form, Input, message, Typography } from 'antd';
+import Cookies from 'js-cookie'
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
-    const onFinish = (values: any) => {
-        console.log('Received values of form: ', values);
+    const navigate = useNavigate();
+
+    const onFinish = async (values: { email: string, password: string }) => {
+        const res = await login(values);
+        if (res.data) {
+            Cookies.set('access_token', res.data.access_token, { expires: 7, secure: true, sameSite: "Lax" })
+            Cookies.set('id', res.data.user.id, { expires: 7, secure: true, sameSite: "Lax" })
+            navigate("/")
+        }
+        else if (res.error) {
+            message.error(res.message);
+            console.log("Login error:", { res })
+        }
     };
 
     return (
