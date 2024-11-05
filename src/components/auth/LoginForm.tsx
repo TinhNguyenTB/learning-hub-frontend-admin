@@ -1,4 +1,5 @@
 import { login } from '@/apis/auth';
+import { PATH, ROLE } from '@/utils/constants';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input, message, Typography } from 'antd';
 import Cookies from 'js-cookie'
@@ -10,9 +11,12 @@ const LoginForm = () => {
     const onFinish = async (values: { email: string, password: string }) => {
         const res = await login(values);
         if (res.data) {
+            if (res.data.user.role !== ROLE.ADMIN) {
+                return;
+            }
             Cookies.set('access_token', res.data.access_token, { expires: 7, secure: true, sameSite: "Lax" })
             Cookies.set('id', res.data.user.id, { expires: 7, secure: true, sameSite: "Lax" })
-            navigate("/")
+            navigate(PATH.HOME)
         }
         else if (res.error) {
             message.error(res.message);

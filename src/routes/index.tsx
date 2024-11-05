@@ -6,38 +6,39 @@ import Levels from "@/pages/Levels";
 import Login from "@/pages/Login";
 import Subcategories from "@/pages/Subcategories";
 import Users from "@/pages/Users";
+import { PATH } from "@/utils/constants";
 import { createBrowserRouter } from "react-router-dom";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: PATH.HOME,
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: 'users',
+        path: PATH.USERS,
         element: <Users />
       },
       {
-        path: 'categories',
+        path: PATH.CATEGORIES,
         element: <Categories />
       },
       {
-        path: 'subcategories',
+        path: PATH.SUBCATEGORIES,
         element: <Subcategories />
       },
       {
-        path: 'courses',
+        path: PATH.COURSES,
         element: <Courses />
       },
       {
-        path: 'levels',
+        path: PATH.LEVELS,
         element: <Levels />
       }
     ]
   },
   {
-    path: '/login',
+    path: PATH.LOGIN,
     element: <Login />
   }
 ]);

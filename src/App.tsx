@@ -3,7 +3,7 @@ import { Layout, theme } from 'antd';
 import Sidebar from '@/components/layout/Sidebar';
 import Topbar from '@/components/layout/Topbar';
 import { Outlet } from 'react-router-dom';
-import { AuthProvider } from './contexts/AuthProvider';
+import { AuthProvider } from '@/contexts/AuthProvider';
 
 const { Content } = Layout;
 

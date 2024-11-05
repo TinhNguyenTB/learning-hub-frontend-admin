@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useState, useEffect } from "react";
-import Cookies from 'js-cookie'
 import { getUserInfo } from "@/apis/auth";
 import { PATH } from "@/utils/constants";
+import { getCookies, removeCookies } from "@/utils/cookies";
 
 export interface IUser {
   id: string
@@ -21,12 +21,11 @@ export const AuthContext = createContext<Omit<Session, 'access_token'> | null>(n
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [userInfo, setUserInfo] = useState<IUser | null>(null);
-  const id = Cookies.get('id');
-  const access_token = Cookies.get('access_token');
+
+  const { id, access_token } = getCookies()
 
   const handleLogout = () => {
-    Cookies.remove("id");
-    Cookies.remove("access_token");
+    removeCookies()
     setUserInfo(null);
     window.location.href = PATH.LOGIN
   }
@@ -37,12 +36,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       return
     }
     const fetchUserInfo = async () => {
-      const res = await getUserInfo(id!);
+      const res = await getUserInfo(id!, access_token);
       if (res.data) {
         setUserInfo(res.data)
       }
       else if (res.error) {
-        console.log(res)
         handleLogout()
       }
     }
