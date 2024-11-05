@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { ISubcategory } from '@/types/backend';
 import { deleteSubcategoryById, getAllSubcategories } from '@/apis/subcategories.api';
 import type { GetProps } from 'antd';
+import AddSubcategoryModal from '@/components/subcategory/AddSubcategoryModal';
 
 type SearchProps = GetProps<typeof Input.Search>;
 const { Search } = Input;
@@ -22,7 +23,7 @@ const Subcategories = () => {
     const [totalPages, setTotalPages] = useState<number>(0);
     const [search, setSearch] = useState<string>("");
 
-    const fetchData = async (current: number, pageSize: number, search: string) => {
+    const fetchData = async (current: number, pageSize: number, search?: string) => {
         setIsLoading(true)
         const res = await getAllSubcategories(current, pageSize, search);
         if (res.data) {
@@ -144,12 +145,12 @@ const Subcategories = () => {
                     },
                 }}
             />
-            {/* <AddCategoryModal
-            isOpen={isAddModalOpen}
-            setOpen={setIsAddModalOpen}
-            getData={fetchData}
-        />
-
+            <AddSubcategoryModal
+                isOpen={isAddModalOpen}
+                setOpen={setIsAddModalOpen}
+                getData={() => fetchData(current, pageSize)}
+            />
+            {/*
         <EditCategoryModal
             isOpen={isEditModalOpen}
             setOpen={setIsEditModalOpen}
