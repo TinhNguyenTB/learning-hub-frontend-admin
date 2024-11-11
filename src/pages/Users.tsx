@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { IUser } from '@/contexts/AuthProvider';
 import { getAllUsers } from '@/apis/users.api';
 import { ROLE } from '@/utils/constants';
+import AddUserModal from '@/components/user/AddUserModal';
 
 
 const roles = [
@@ -154,12 +155,12 @@ const Users = () => {
                     },
                 }}
             />
-            {/* <AddCategoryModal
+            <AddUserModal
                 isOpen={isAddModalOpen}
                 setOpen={setIsAddModalOpen}
-                getData={fetchData}
+                getData={() => fetchData(current, pageSize)}
             />
-             */}
+
         </div>
     )
 }

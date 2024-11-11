@@ -19,3 +19,14 @@ export const getAllUsers = async (current: number, pageSize: number, search?: st
         }
     })
 }
+
+export const createUser = async (data: { email: string, name: string, password: string }) => {
+    return await sendRequest<IBackendRes<IModelPaginate<IUser>>>({
+        url: `${import.meta.env.VITE_BASE_BACKEND_URL}/api/v1/users`,
+        method: 'POST',
+        body: data,
+        headers: {
+            Authorization: `Bearer ${access_token}`
+        }
+    })
+}
