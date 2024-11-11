@@ -30,7 +30,10 @@ export const createSubcategory = async (data: { name: string; categoryId: string
 export const deleteSubcategoryById = async (id: string) => {
     return await sendRequest<IBackendRes<ISubcategory>>({
         url: `${import.meta.env.VITE_BASE_BACKEND_URL}/api/v1/subcategories/${id}`,
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+            Authorization: `Bearer ${access_token}`
+        }
     })
 }
 

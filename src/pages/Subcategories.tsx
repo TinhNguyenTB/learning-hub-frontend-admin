@@ -100,7 +100,7 @@ const Subcategories = () => {
                     <Popconfirm
                         placement="leftTop"
                         title={"Delete level"}
-                        description={"Are you sure to delete this category?"}
+                        description={"Are you sure to delete this subcategory?"}
                         onConfirm={() => handleDeleteSubcategory(record.id)}
                     >
                         <DeleteOutlined
