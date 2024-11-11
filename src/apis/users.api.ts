@@ -56,3 +56,16 @@ export const changeUserRole = async (role: string, id: string) => {
         }
     })
 }
+
+export const changeActivateAccount = async (isActive: boolean, id: string) => {
+    return await sendRequest<IBackendRes<any>>({
+        url: `${import.meta.env.VITE_BASE_BACKEND_URL}/api/v1/users/change-active/${id}`,
+        method: 'POST',
+        body: {
+            isActive
+        },
+        headers: {
+            Authorization: `Bearer ${access_token}`
+        }
+    })
+}

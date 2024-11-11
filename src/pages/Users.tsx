@@ -2,7 +2,7 @@ import { Button, message, Select, Table } from 'antd';
 import { TableProps, GetProps, Input } from 'antd';
 import { useEffect, useState } from 'react';
 import { IUser } from '@/contexts/AuthProvider';
-import { changeUserRole, deleteUserById, getAllUsers } from '@/apis/users.api';
+import { changeActivateAccount, changeUserRole, deleteUserById, getAllUsers } from '@/apis/users.api';
 import { ROLE } from '@/utils/constants';
 import AddUserModal from '@/components/user/AddUserModal';
 
@@ -72,6 +72,17 @@ const Users = () => {
         }
     }
 
+    const handleChangeActive = async (value: boolean, id: string) => {
+        const res = await changeActivateAccount(value, id);
+        if (res.data) {
+            message.success("Change activation account succeed");
+            fetchData(current, pageSize, search)
+        }
+        else if (res.error) {
+            message.error(res.message)
+        }
+    }
+
     const onSearch: SearchProps['onSearch'] = (value) => {
         setSearch(value);
         fetchData(1, pageSize, value)
@@ -113,7 +124,7 @@ const Users = () => {
             render: (_, record) => (
                 <Select
                     defaultValue={record.isActive}
-                    // onChange={(value) => handleChangeActive(value, record.id)}
+                    onChange={(value) => handleChangeActive(value, record.id)}
                     options={isDeleted}
                 />
             )
