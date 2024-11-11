@@ -37,12 +37,16 @@ export const deleteSubcategoryById = async (id: string) => {
     })
 }
 
-export const updateSubcategory = async (id: string, name: string) => {
+export const updateSubcategory = async (id: string, name: string, categoryId: string) => {
     return await sendRequest<IBackendRes<ISubcategory>>({
         url: `${import.meta.env.VITE_BASE_BACKEND_URL}/api/v1/subcategories/${id}`,
         method: 'PATCH',
         body: {
-            name
+            name,
+            categoryId
+        },
+        headers: {
+            Authorization: `Bearer ${access_token}`
         }
     })
 }

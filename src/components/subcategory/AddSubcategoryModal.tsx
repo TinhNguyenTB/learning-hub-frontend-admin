@@ -1,4 +1,4 @@
-import { createCategory, getAllCategories } from '@/apis/categories.api';
+import { getAllCategories } from '@/apis/categories.api';
 import { createSubcategory } from '@/apis/subcategories.api';
 import { ICategory } from '@/types/backend';
 import { convertArrayToSelect } from '@/utils/convertArrayToSelect';

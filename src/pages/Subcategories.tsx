@@ -6,6 +6,7 @@ import { ISubcategory } from '@/types/backend';
 import { deleteSubcategoryById, getAllSubcategories } from '@/apis/subcategories.api';
 import type { GetProps } from 'antd';
 import AddSubcategoryModal from '@/components/subcategory/AddSubcategoryModal';
+import EditSubcategoryModal from '@/components/subcategory/EditSubcategoryModal';
 
 type SearchProps = GetProps<typeof Input.Search>;
 const { Search } = Input;
@@ -145,18 +146,21 @@ const Subcategories = () => {
                     },
                 }}
             />
-            <AddSubcategoryModal
-                isOpen={isAddModalOpen}
-                setOpen={setIsAddModalOpen}
-                getData={() => fetchData(current, pageSize)}
-            />
-            {/*
-        <EditCategoryModal
-            isOpen={isEditModalOpen}
-            setOpen={setIsEditModalOpen}
-            dataUpdate={dataUpdate}
-            getData={fetchData}
-        /> */}
+            {isAddModalOpen &&
+                <AddSubcategoryModal
+                    isOpen={isAddModalOpen}
+                    setOpen={setIsAddModalOpen}
+                    getData={() => fetchData(current, pageSize)}
+                />
+            }
+            {isEditModalOpen &&
+                <EditSubcategoryModal
+                    isOpen={isEditModalOpen}
+                    setOpen={setIsEditModalOpen}
+                    dataUpdate={dataUpdate!}
+                    getData={() => fetchData(current, pageSize)}
+                />
+            }
         </div>
     )
 }
