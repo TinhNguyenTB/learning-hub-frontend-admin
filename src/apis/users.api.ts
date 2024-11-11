@@ -30,3 +30,16 @@ export const createUser = async (data: { email: string, name: string, password: 
         }
     })
 }
+
+export const deleteUserById = async (deleted: boolean, id: string) => {
+    return await sendRequest<IBackendRes<any>>({
+        url: `${import.meta.env.VITE_BASE_BACKEND_URL}/api/v1/users/${id}`,
+        method: 'DELETE',
+        body: {
+            deleted
+        },
+        headers: {
+            Authorization: `Bearer ${access_token}`
+        }
+    })
+}

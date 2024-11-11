@@ -3,7 +3,7 @@ import type { TableProps } from 'antd';
 import { DeleteOutlined } from "@ant-design/icons";
 import { useEffect, useState } from 'react';
 import { IUser } from '@/contexts/AuthProvider';
-import { getAllUsers } from '@/apis/users.api';
+import { deleteUserById, getAllUsers } from '@/apis/users.api';
 import { ROLE } from '@/utils/constants';
 import AddUserModal from '@/components/user/AddUserModal';
 
@@ -48,16 +48,16 @@ const Users = () => {
         fetchData(current, pageSize, search)
     }, [])
 
-    // const handleDeleteCategory = async (id: string) => {
-    //     const res = await deleteCategoryById(id);
-    //     if (res.data) {
-    //         message.success("Delete category succeed");
-    //         fetchData()
-    //     }
-    //     else if (res.error) {
-    //         message.error(res.message)
-    //     }
-    // }
+    const handleChangeDeleted = async (value: boolean, id: string) => {
+        const res = await deleteUserById(value, id);
+        if (res.data) {
+            message.success("Delete user succeed");
+            fetchData(current, pageSize, search)
+        }
+        else if (res.error) {
+            message.error(res.message)
+        }
+    }
 
     const columns: TableProps<IUser>['columns'] = [
         {
@@ -106,26 +106,10 @@ const Users = () => {
             render: (_, record) => (
                 <Select
                     defaultValue={record.deleted}
-                    // onChange={(value) => handleChangeDeleted(value,record.id)}
+                    onChange={(value) => handleChangeDeleted(value, record.id)}
                     options={isDeleted}
                 />
             )
-        },
-        {
-            title: 'Actions',
-            key: 'actions',
-            render: (_, record) => (
-                <Popconfirm
-                    placement="leftTop"
-                    title={"Delete user"}
-                    description={"Are you sure to delete this user?"}
-                // onConfirm={() => handleDeleteCategory(record.id)}
-                >
-                    <DeleteOutlined
-                        style={{ fontSize: '1.5rem', cursor: 'pointer', color: 'red' }}
-                    />
-                </Popconfirm>
-            ),
         },
     ];
 
