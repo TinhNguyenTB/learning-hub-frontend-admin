@@ -43,3 +43,16 @@ export const deleteUserById = async (deleted: boolean, id: string) => {
         }
     })
 }
+
+export const changeUserRole = async (role: string, id: string) => {
+    return await sendRequest<IBackendRes<any>>({
+        url: `${import.meta.env.VITE_BASE_BACKEND_URL}/api/v1/users/change-role/${id}`,
+        method: 'POST',
+        body: {
+            role
+        },
+        headers: {
+            Authorization: `Bearer ${access_token}`
+        }
+    })
+}

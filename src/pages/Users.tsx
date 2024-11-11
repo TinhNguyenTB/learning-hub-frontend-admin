@@ -1,12 +1,14 @@
-import { Button, message, Popconfirm, Select, Table } from 'antd';
-import type { TableProps } from 'antd';
-import { DeleteOutlined } from "@ant-design/icons";
+import { Button, message, Select, Table } from 'antd';
+import { TableProps, GetProps, Input } from 'antd';
 import { useEffect, useState } from 'react';
 import { IUser } from '@/contexts/AuthProvider';
-import { deleteUserById, getAllUsers } from '@/apis/users.api';
+import { changeUserRole, deleteUserById, getAllUsers } from '@/apis/users.api';
 import { ROLE } from '@/utils/constants';
 import AddUserModal from '@/components/user/AddUserModal';
 
+
+type SearchProps = GetProps<typeof Input.Search>;
+const { Search } = Input;
 
 const roles = [
     { value: ROLE.USER, label: ROLE.USER },
@@ -51,12 +53,28 @@ const Users = () => {
     const handleChangeDeleted = async (value: boolean, id: string) => {
         const res = await deleteUserById(value, id);
         if (res.data) {
-            message.success("Delete user succeed");
+            message.success("Change deleted user succeed");
             fetchData(current, pageSize, search)
         }
         else if (res.error) {
             message.error(res.message)
         }
+    }
+
+    const handleChangeRole = async (value: string, id: string) => {
+        const res = await changeUserRole(value, id);
+        if (res.data) {
+            message.success("Change user role succeed");
+            fetchData(current, pageSize, search)
+        }
+        else if (res.error) {
+            message.error(res.message)
+        }
+    }
+
+    const onSearch: SearchProps['onSearch'] = (value) => {
+        setSearch(value);
+        fetchData(1, pageSize, value)
     }
 
     const columns: TableProps<IUser>['columns'] = [
@@ -84,7 +102,7 @@ const Users = () => {
             render: (_, record) => (
                 <Select
                     defaultValue={record.role}
-                    // onChange={(value) => handleChangeRole(value,record.id)}
+                    onChange={(value) => handleChangeRole(value, record.id)}
                     options={roles}
                 />
             )
@@ -114,10 +132,17 @@ const Users = () => {
     ];
 
     return (
-        <div>
+        <div style={{ display: "flex", flexDirection: 'column', gap: "1rem" }}>
+            <Search
+                size='large'
+                placeholder="Search user by name"
+                onSearch={onSearch}
+                enterButton
+                style={{ width: "50%" }}
+            />
             <Button
                 type='primary'
-                style={{ margin: '0 0 1rem' }}
+                style={{ margin: '0.5rem 0', width: 'fit-content' }}
                 onClick={() => setIsAddModalOpen(true)}
             >
                 Add user
