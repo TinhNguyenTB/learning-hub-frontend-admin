@@ -8,6 +8,8 @@ export interface IUser {
   name: string
   email: string
   role: string
+  deleted: boolean
+  isActive: boolean
   image: string
 }
 

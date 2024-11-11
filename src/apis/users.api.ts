@@ -1,0 +1,21 @@
+import { IBackendRes, IModelPaginate } from "@/types/backend";
+import { sendRequest } from "@/apis/http";
+import { getCookies } from "@/utils/cookies";
+import { IUser } from "@/contexts/AuthProvider";
+
+const { access_token } = getCookies()
+
+export const getAllUsers = async (current: number, pageSize: number, search?: string) => {
+    return await sendRequest<IBackendRes<IModelPaginate<IUser>>>({
+        url: `${import.meta.env.VITE_BASE_BACKEND_URL}/api/v1/users`,
+        method: 'GET',
+        queryParams: {
+            current,
+            pageSize,
+            search
+        },
+        headers: {
+            Authorization: `Bearer ${access_token}`
+        }
+    })
+}
